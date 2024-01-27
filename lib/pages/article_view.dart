@@ -17,11 +17,16 @@ class _ArticleViewState extends State<ArticleView> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Daily'),
+            Text(
+              'Daily',
+              style: TextStyle(fontFamily: 'Cookie', fontSize: 30),
+            ),
             Text(
               'News',
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.blue[600]),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.purple[500],
+                  fontFamily: 'Montserrat'),
             )
           ],
         ),

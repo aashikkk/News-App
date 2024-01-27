@@ -61,11 +61,17 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Daily'),
+            Text(
+              'Daily',
+              style: TextStyle(fontFamily: 'Cookie', fontSize: 30),
+            ),
             Text(
               'News',
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.purple[500]),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 23,
+                  color: Colors.purple[700],
+                  fontFamily: 'FiraSans'),
             )
           ],
         ),
@@ -94,7 +100,7 @@ class _HomeState extends State<Home> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    // SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Row(
@@ -103,10 +109,10 @@ class _HomeState extends State<Home> {
                           Text(
                             'Breaking News!',
                             style: TextStyle(
-                              color: Colors.red[800],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
+                                color: Colors.red[800],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                fontFamily: 'Poppins'),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -122,7 +128,8 @@ class _HomeState extends State<Home> {
                                   decoration: TextDecoration.underline,
                                   color: Colors.deepPurple,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 16),
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins'),
                             ),
                           ),
                         ],
@@ -166,7 +173,8 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                                fontSize: 18,
+                                fontFamily: 'Poppins'),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -181,6 +189,7 @@ class _HomeState extends State<Home> {
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Colors.deepPurple,
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16),
                             ),
@@ -246,10 +255,10 @@ class _HomeState extends State<Home> {
                   name,
                   maxLines: 2,
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat'),
                 ),
               ),
             ],
@@ -278,35 +287,35 @@ class CategoryTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    CategoryNews(categoryName: categoryName)));
+                builder: (context) => CategoryNews(name: categoryName)));
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 16),
+        margin: const EdgeInsets.only(right: 10),
         child: Stack(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                image,
-                width: 120,
-                height: 60,
-                fit: BoxFit.cover,
-              ),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(8),
+            //   child: Image.asset(
+            //     image,
+            //     width: 120,
+            //     height: 60,
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
             Container(
               width: 120,
-              height: 60,
+              height: 40,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.black26),
+                  color: Colors.blue[800]),
               child: Center(
                 child: Text(
                   categoryName,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'FireSans'),
                 ),
               ),
             ),
@@ -343,7 +352,7 @@ class BlogTile extends StatelessWidget {
             elevation: 3.0,
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.5),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -357,7 +366,7 @@ class BlogTile extends StatelessWidget {
                             fit: BoxFit.cover,
                           ))),
                   SizedBox(
-                    width: 8,
+                    width: 7,
                   ),
                   Column(
                     children: [
@@ -368,8 +377,9 @@ class BlogTile extends StatelessWidget {
                           maxLines: 2,
                           style: TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              fontFamily: 'Montserrat'),
                         ),
                       ),
                       SizedBox(height: 7),
@@ -381,7 +391,8 @@ class BlogTile extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.black54,
                               fontWeight: FontWeight.w500,
-                              fontSize: 15),
+                              fontSize: 14,
+                              fontFamily: 'Montserrat'),
                         ),
                       ),
                     ],

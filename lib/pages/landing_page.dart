@@ -22,7 +22,7 @@ class _LandingPageState extends State<LandingPage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: Image.asset(
-                  'assets/images/building.jpg',
+                  'assets/images/vintage_newspaper.jpg',
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 1.7,
                   fit: BoxFit.cover,
@@ -30,21 +30,58 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ),
             SizedBox(height: 20),
-            Text(
-              'News from around the \n       world for you',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Where ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+                Text(
+                  'readers ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'become ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontSize: 26,
+                  ),
+                ),
+                Text(
+                  'leaders',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20),
             Text(
-              'Best time to read, take your time to read \n              a little more of this world',
+              'Explore the world by reading it \nand become the complete man',
               style: TextStyle(
-                color: Colors.black45,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+                  color: Colors.black45,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Poppins'),
             ),
             SizedBox(height: 40),
             GestureDetector(
@@ -56,7 +93,7 @@ class _LandingPageState extends State<LandingPage> {
                 width: MediaQuery.of(context).size.width / 1.2,
                 child: Material(
                   borderRadius: BorderRadius.circular(30),
-                  elevation: 5.0,
+                  elevation: 6.0,
                   // child: InkWell(
                   //   onTap: () {
                   //     // Navigate to the home screen when the button is pressed
@@ -76,7 +113,8 @@ class _LandingPageState extends State<LandingPage> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 17,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Poppins'),
                       ),
                     ),
                   ),

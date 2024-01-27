@@ -45,7 +45,10 @@ class _AllNewsState extends State<AllNews> {
       appBar: AppBar(
         title: Text(
           widget.news + " News",
-          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: Colors.purple[500],
+              fontWeight: FontWeight.bold,
+              fontFamily: 'FireSans'),
         ),
         centerTitle: true,
         elevation: 0.0,
@@ -115,12 +118,17 @@ class AllNewsSection extends StatelessWidget {
               maxLines: 2,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
+                  fontSize: 17.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat'),
             ),
             Text(
               desc,
               maxLines: 3,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: 14,
+              ),
             ),
             SizedBox(
               height: 20.0,

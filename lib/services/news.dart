@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../model/article_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class News {
   List<ArticleModel> news = [];
@@ -9,7 +10,7 @@ class News {
 
   Future<void> getNews() async {
     String url =
-        "https://newsapi.org/v2/everything?q=tesla&from=2023-12-26&sortBy=publishedAt&apiKey=$apiKey";
+        "https://newsapi.org/v2/everything?q=tesla&from=2023-12-29&sortBy=publishedAt&apiKey=$apiKey";
     var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);

@@ -6,8 +6,8 @@ import 'package:newsapi_cw/services/data.dart';
 import 'package:newsapi_cw/services/show_category_news.dart';
 
 class CategoryNews extends StatefulWidget {
-  String categoryName;
-  CategoryNews({super.key, required this.categoryName});
+  String name;
+  CategoryNews({super.key, required this.name});
 
   @override
   State<CategoryNews> createState() => _CategoryNewsState();
@@ -25,7 +25,7 @@ class _CategoryNewsState extends State<CategoryNews> {
 
   getCategories() async {
     ShowCategoryNews showCategoryNews = ShowCategoryNews();
-    await showCategoryNews.getCategoriesNews(widget.categoryName.toLowerCase());
+    await showCategoryNews.getCategoriesNews(widget.name.toLowerCase());
     categories = showCategoryNews.categories;
     setState(() {
       _loading = false;
@@ -37,9 +37,11 @@ class _CategoryNewsState extends State<CategoryNews> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.categoryName,
-          style:
-              TextStyle(fontWeight: FontWeight.bold, color: Colors.blue[600]),
+          widget.name,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.purple[600],
+              fontFamily: 'Poppins'),
         ),
         centerTitle: true,
         elevation: 0.0, // Shadow of bar
@@ -98,11 +100,16 @@ class ShowCategory extends StatelessWidget {
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat'),
             ),
             Text(
               desc,
               maxLines: 3,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14.0,
+                  fontFamily: 'Montserrat'),
             ),
             SizedBox(height: 20.0),
           ],
