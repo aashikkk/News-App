@@ -1,34 +1,33 @@
-import '../model/slider_model.dart';
+import 'dart:convert';
 
-List<SliderModel> getSlider() {
-  List<SliderModel> slider = [];
+import 'package:newsapi_cw/model/slider_model.dart';
+import 'package:http/http.dart' as http;
 
-  SliderModel sliderModel = new SliderModel();
-  sliderModel.image = "assets/images/business.jpg";
-  sliderModel.name = "Bow to the Authority of Silentforce";
+class Sliders {
+  List<SliderModel> sliders = [];
+  final String apiKey = "ca5b216802ca4dd5a8dab8b08e9688c1";
 
-  slider.add(sliderModel);
+  Future<void> getSlider() async {
+    String url =
+        "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=$apiKey";
+    var response = await http.get(Uri.parse(url));
 
-  sliderModel = new SliderModel();
-  sliderModel.image = "assets/images/entertainment.jpg";
-  sliderModel.name = "Bow to the Authority of Silentforce";
-  slider.add(sliderModel);
+    var jsonData = jsonDecode(response.body);
 
-  sliderModel = new SliderModel();
-  sliderModel.image = "assets/images/sport.jpg";
-  sliderModel.name = "Bow to the Authority of Silentforce";
-  slider.add(sliderModel);
-
-  sliderModel = new SliderModel();
-  sliderModel.image = "assets/images/general.jpg";
-  sliderModel.name = "Bow to the Authority of Silentforce";
-  slider.add(sliderModel);
-
-  sliderModel = new SliderModel();
-  sliderModel.image = "assets/images/health.jpg";
-  sliderModel.name = "Bow to the Authority of Silentforce";
-  slider.add(sliderModel);
-
-  // Return the list of CategoryModel objects representing different categories
-  return slider;
+    if (jsonData['status'] == 'ok') {
+      jsonData["articles"].forEach((element) {
+        if (element["urlToImage"] != null && element['description'] != null) {
+          SliderModel sliderModel = SliderModel(
+            title: element["title"],
+            description: element["description"],
+            url: element["url"],
+            urlToImage: element["urlToImage"],
+            content: element["content"],
+            author: element["author"],
+          );
+          sliders.add(sliderModel);
+        }
+      });
+    }
+  }
 }

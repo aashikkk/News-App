@@ -1,18 +1,13 @@
-import 'package:flutter/material.dart';
-
-class SliderModel {
-  // Source source;
+class ShowCategoryModel {
   String? author;
   String? title;
   String? description;
   String? url;
   String? urlToImage;
-
   // DateTime? publishedAt;
   String? content;
 
-  SliderModel({
-    // required this.source,
+  ShowCategoryModel({
     required this.author,
     required this.title,
     required this.description,

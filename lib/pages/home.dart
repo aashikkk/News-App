@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:newsapi_cw/model/article_model.dart';
+import 'package:newsapi_cw/pages/article_view.dart';
 import 'package:newsapi_cw/services/news.dart';
 import 'package:newsapi_cw/services/data.dart';
 import 'package:newsapi_cw/services/slider_data.dart';
@@ -9,6 +10,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../model/category_model.dart';
 import '../model/slider_model.dart';
+import 'all_news.dart';
+import 'category_news.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,9 +27,10 @@ class _HomeState extends State<Home> {
   bool _loading = true;
 
   int activeIndex = 0;
+  int breakingNewsCount = 5;
   @override
   void initState() {
-    sliders = getSlider();
+    getSlider();
     categories = getCategories();
     getNews();
     super.initState();
@@ -36,6 +40,15 @@ class _HomeState extends State<Home> {
     News newsclass = News();
     await newsclass.getNews();
     articles = newsclass.news;
+    setState(() {
+      _loading = false;
+    });
+  }
+
+  getSlider() async {
+    Sliders slider = Sliders();
+    await slider.getSlider();
+    sliders = slider.sliders;
     setState(() {
       _loading = false;
     });
@@ -52,11 +65,11 @@ class _HomeState extends State<Home> {
             Text(
               'News',
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.blue[600]),
+                  fontWeight: FontWeight.bold, color: Colors.purple[500]),
             )
           ],
         ),
-        centerTitle: false,
+        centerTitle: true,
         elevation: 0.0, // Shadow of bar
       ),
       body: _loading
@@ -95,12 +108,22 @@ class _HomeState extends State<Home> {
                               fontSize: 18,
                             ),
                           ),
-                          Text(
-                            'View All',
-                            style: TextStyle(
-                                color: Colors.deepPurple,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AllNews(news: "Breaking")));
+                            },
+                            child: Text(
+                              'View All',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
                           ),
                         ],
                       ),
@@ -109,11 +132,12 @@ class _HomeState extends State<Home> {
                       height: 20,
                     ),
                     CarouselSlider.builder(
-                        itemCount: sliders.length,
+                        itemCount: breakingNewsCount,
                         itemBuilder: (context, index, realIndex) {
-                          String? res = sliders[index].image;
-                          String? res1 = sliders[index].name;
-                          return buildImage(res!, index, res1!);
+                          String? res = sliders[index].urlToImage;
+                          String? res1 = sliders[index].title;
+                          String? url = sliders[index].url;
+                          return buildImage(res!, index, res1!, url!);
                         },
                         options: CarouselOptions(
                             height: 250,
@@ -144,12 +168,22 @@ class _HomeState extends State<Home> {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
-                          Text(
-                            'View All',
-                            style: TextStyle(
-                                color: Colors.deepPurple,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AllNews(news: "Trending")));
+                            },
+                            child: Text(
+                              'View All',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16),
+                            ),
                           ),
                         ],
                       ),
@@ -162,9 +196,11 @@ class _HomeState extends State<Home> {
                           itemCount: articles.length,
                           itemBuilder: (context, index) {
                             return BlogTile(
-                                desc: articles[index].description!,
-                                imageUrl: articles[index].urlToImage!,
-                                title: articles[index].title!);
+                              desc: articles[index].description!,
+                              imageUrl: articles[index].urlToImage!,
+                              title: articles[index].title!,
+                              url: articles[index].url!,
+                            );
                           }),
                     ),
                   ],
@@ -174,99 +210,130 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildImage(String image, int index, String name) => Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(image,
+  // Breaking News Slider Function
+  Widget buildImage(String image, int index, String name, String url) =>
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ArticleView(blogUrl: url)));
+        },
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          child: Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: image,
                   height: 250,
                   fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width),
-            ),
-            Container(
-              height: 250,
-              padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.only(top: 170),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: Colors.black26,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-              child: Text(
-                name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  width: MediaQuery.of(context).size.width,
                 ),
               ),
-            ),
-          ],
+              Container(
+                height: 250,
+                padding: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.only(top: 170),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                child: Text(
+                  name,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
+
+  // Slider for Breaking News
   Widget buildIndicator() => AnimatedSmoothIndicator(
         activeIndex: activeIndex,
-        count: sliders.length,
+        count: breakingNewsCount,
         effect: WormEffect(
             dotWidth: 15, dotHeight: 15, activeDotColor: Colors.deepPurple),
       );
 }
 
+// News categories function Ex: Business
 class CategoryTile extends StatelessWidget {
   final image, categoryName;
   const CategoryTile({super.key, this.image, this.categoryName});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              image,
-              width: 120,
-              height: 60,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            width: 120,
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8), color: Colors.black26),
-            child: Center(
-              child: Text(
-                categoryName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CategoryNews(categoryName: categoryName)));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16),
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                image,
+                width: 120,
+                height: 60,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-        ],
+            Container(
+              width: 120,
+              height: 60,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.black26),
+              child: Center(
+                child: Text(
+                  categoryName,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
+// Trending News Tile function
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, desc;
+  String imageUrl, title, desc, url;
   BlogTile(
       {super.key,
       required this.desc,
       required this.imageUrl,
-      required this.title});
+      required this.title,
+      required this.url});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)));
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         child: Padding(
@@ -298,6 +365,7 @@ class BlogTile extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 1.7,
                         child: Text(
                           title,
+                          maxLines: 2,
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -309,6 +377,7 @@ class BlogTile extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 1.7,
                         child: Text(
                           desc,
+                          maxLines: 3,
                           style: TextStyle(
                               color: Colors.black54,
                               fontWeight: FontWeight.w500,

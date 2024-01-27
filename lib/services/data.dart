@@ -33,7 +33,7 @@ List<CategoryModel> getCategories() {
 
   // Create a new CategoryModel object for the "Health" category
   categoryModel = new CategoryModel();
-  categoryModel.categoryName = "General";
+  categoryModel.categoryName = "Health";
   categoryModel.image = "assets/images/health.jpg";
   category.add(categoryModel);
 
